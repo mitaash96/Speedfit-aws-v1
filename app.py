@@ -1,16 +1,30 @@
 import flet as ft
+import config as conf
 
-def main(page:ft.Page):
-    page.title = 'PassKeepr'
-    page.horizontal_alignment = 'center'
-    page.vertical_alignment = 'center'
-    page.bgcolor = 'white'
+class split_control(ft.UserControl):
+    def __init__(self, val, page):
+        super().__init__()
+        self.val = val
+        self.page = page
+    
+    def render_split(self, e):
+        self.page.clean()
+        self.page.add(ft.Container(content= ft.Text(value= self.val),
+            alignment= ft.alignment.center, bgcolor= 'blue'))
 
-    page.add(
-        ft.TextField(bgcolor= 'grey', color= 'black', width= 500, text_align= 'center')
-    )
+    def build(self):
+        return ft.TextButton(text= f'{self.val}', on_click= self.render_split, width= 500)
 
+def main(page: ft.Page):
+   
+    page.title = 'Select Split'
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    page.add(ft.GridView(controls= [split_control(_, page) for _ in conf.split.keys()],
+        expand= True, horizontal= True, col= 3, runs_count=2, child_aspect_ratio=1.0))
+    
+    page.padding = 10
+    
     page.update()
 
-if __name__ == '__main__':
-    ft.app(target = main)
+ft.app(target=main)
