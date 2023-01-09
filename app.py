@@ -13,7 +13,8 @@ class split_control(ft.UserControl):
             alignment= ft.alignment.center, bgcolor= 'blue'))
 
     def build(self):
-        return ft.TextButton(text= f'{self.val}', on_click= self.render_split, width= 500)
+        return ft.Container(content = ft.Text(value = f'{self.val}'), on_click= self.render_split, bgcolor= 'red', expand= True,
+            width = 500, height= 500)
 
 def main(page: ft.Page):
    
@@ -21,7 +22,7 @@ def main(page: ft.Page):
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.add(ft.GridView(controls= [split_control(_, page) for _ in conf.split.keys()],
-        expand= True, horizontal= True, col= 3, runs_count=2, child_aspect_ratio=1.0))
+        expand= True, horizontal= True, col= 3, runs_count=2, child_aspect_ratio=1.0, run_spacing= 0, padding= 0))
     
     page.padding = 10
     
